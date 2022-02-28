@@ -1,20 +1,20 @@
-const searchFood = () => {
+const searchFood = async() => {
     const searchField = document.getElementById('search-field');
     const searchText = searchField.value;
     //clear data
     searchField.value= '';
 
     //load data
-    const url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${searchText}
-    `;
+    const url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${searchText}`;
+   try {
     const res = await fetch(url);
     const data = await res.json();
     displaySearchResult(data.meals);
-    
-    /* fetch(url)
-    .then(res => res.json())
-    .then(data => displaySearchResult(data.meals)) */
     console.log(url);
+   } 
+   catch (error) {
+       console.log(error);
+   }
 
 }
 const displaySearchResult = meals =>{
@@ -22,6 +22,7 @@ const displaySearchResult = meals =>{
     const searchResult = document.getElementById('search-result');
     /* searchResult.innerHTML= ''; */  //not recommended 
     searchResult.textContent = '';
+
     // error handaling
     if (meals.length == 0) {
         console.log('nothing');
